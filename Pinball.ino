@@ -6,19 +6,17 @@ int hexRESET = 3;
 int hexCLK = 4;
 int LED1 = 5;
 int LED2 = 6;
-int LED3 = 7;
+int Launcher = 7;
 int buttonL = 8;
 int buttonR = 9;
 int pushL = 12;
 int pushR = 11;
 int irCoin = 2;
-int irLauncher = 1;
 unsigned long startTime, timePassed;
 int voltsC, voltsL; //coin and launcher voltages
 int actionNum;
 
 #define irCoin A2
-#define irLauncher A1
 
 SoftwareSerial mySoftwareSerial(10, 13); // Create a software serial connection on pins 10 (RX) and 11 (TX)
 DFRobotDFPlayerMini myDFPlayer;          // Create a DFPlayerMini object
@@ -46,23 +44,25 @@ void setup() {
 
   pinMode(hexRESET, OUTPUT);//hex reset
   pinMode(hexCLK, OUTPUT); //hex clock
-  pinMode(LED1, OUTPUT); //hex clock
-  pinMode(LED2, OUTPUT); //hex clock
-  pinMode(LED3, OUTPUT); //hex clock
+  pinMode(LED1, OUTPUT); 
+  pinMode(LED2, OUTPUT); 
+
+
+
   pinMode(pushL, OUTPUT); //Left paddle
   pinMode(pushR, OUTPUT); //right paddle
 
+  pinMode(Launcher, INPUT);
   pinMode(buttonL, INPUT); //Button L #1
   pinMode(buttonR, INPUT); //Button R #2
- // pinMode(irCoin, INPUT); //IR Sensor #1
- // pinMode(irLauncher, INPUT); //IR Sensor #2
+
 
   randomSeed(analogRead(0));
 
 }
 
 void loop() {
-  delay(2000);
+  delay(5000);
   digitalWrite(hexRESET,LOW);
   bool lost = false;
   bool gameStart = false;
@@ -148,10 +148,13 @@ bool call_act1(int cd){
       return true;
     }
 
+    if(digitalRead(Launcher) == HIGH){
+      return true;
+    }
+
     voltsC = analogRead(irCoin);
-    voltsL = analogRead(irLauncher);
     delay(15);
-    if (voltsC > 605 || voltsL > 605){
+    if (voltsC > 605){
       return true;
     }
 
@@ -184,10 +187,13 @@ bool call_act2(int cd){
       return false;
     }
 
+    if(digitalRead(Launcher) == HIGH){
+      return true;
+    }
+
     voltsC = analogRead(irCoin);
-    voltsL = analogRead(irLauncher);
     delay(15);
-    if (voltsC > 605 || voltsL > 605){
+    if (voltsC > 605){
       return true;
     }
 
@@ -220,15 +226,14 @@ bool call_act3(int cd){
       return true;
     }
 
+    if(digitalRead(Launcher) == HIGH){
+      return false;
+    }
+
     voltsC = analogRead(irCoin);
-    voltsL = analogRead(irLauncher);
     delay(15);
     if (voltsC > 605){
       return true;
-    }
-
-    if (voltsL > 605){
-      return false;
     }
 
   }
@@ -262,13 +267,12 @@ bool call_act4(int cd){
     }
 
     voltsC = analogRead(irCoin);
-    voltsL = analogRead(irLauncher);
     delay(15);
     if (voltsC > 605){
       return false;
     }
 
-    if (voltsL > 605){
+    if(digitalRead(Launcher) == HIGH){
       return true;
     }
 
