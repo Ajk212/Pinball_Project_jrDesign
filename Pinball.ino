@@ -6,7 +6,7 @@ int hexRESET = 3;
 int hexCLK = 4;
 int LED1 = 5;
 int LED2 = 6;
-int Launcher = 7;
+//int Launcher = 7;
 int buttonL = 8;
 int buttonR = 9;
 int pushL = 12;
@@ -52,7 +52,7 @@ void setup() {
   pinMode(pushL, OUTPUT); //Left paddle
   pinMode(pushR, OUTPUT); //right paddle
 
-  pinMode(Launcher, INPUT);
+ // pinMode(Launcher, INPUT);
   pinMode(buttonL, INPUT); //Button L #1
   pinMode(buttonR, INPUT); //Button R #2
 
@@ -148,9 +148,9 @@ bool call_act1(int cd){
       return true;
     }
 
-    if(digitalRead(Launcher) == HIGH){
-      return true;
-    }
+  //  if(digitalRead(Launcher) == HIGH){
+ //     return true;
+//    }
 
     voltsC = analogRead(irCoin);
     delay(15);
@@ -187,9 +187,9 @@ bool call_act2(int cd){
       return false;
     }
 
-    if(digitalRead(Launcher) == HIGH){
-      return true;
-    }
+ //   if(digitalRead(Launcher) == HIGH){
+ //     return true;
+ //   }
 
     voltsC = analogRead(irCoin);
     delay(15);
@@ -226,9 +226,9 @@ bool call_act3(int cd){
       return true;
     }
 
-    if(digitalRead(Launcher) == HIGH){
-      return false;
-    }
+  //  if(digitalRead(Launcher) == HIGH){
+ //     return false;
+ //   }
 
     voltsC = analogRead(irCoin);
     delay(15);
@@ -272,9 +272,9 @@ bool call_act4(int cd){
       return false;
     }
 
-    if(digitalRead(Launcher) == HIGH){
-      return true;
-    }
+//    if(digitalRead(Launcher) == HIGH){
+//      return true;
+//    }
 
   }
   //If not completed in alloted time, sets loss to true
